@@ -1,0 +1,29 @@
+{
+  "name": "mock-auth-backend",
+  "version": "1.0.0",
+  "description": "Auth server",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "config": "^1.28.0",
+    "cors": "^2.8.4",
+    "edit-json-file": "^1.4.1",
+    "express": "^4.16.2",
+    "json-server-auth": "^2.0.2",
+    "jsonwebtoken": "^8.1.0",
+    "uuid": "^8.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "jwt",
+    "authentication",
+    "authorization",
+    "server",
+    "mock",
+    "test"
+  ],
+  "author": "Giorgi Koroshinadze"
+}
