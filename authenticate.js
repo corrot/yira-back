@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const accounts = require('./accounts.json');
+const fs = require('fs');
+const accounts = JSON.parse(fs.readFileSync('accounts.json'));
 
 // Method that attempts to authenticate a user and delivers a JWT on success
 module.exports = function (identifier, password) {

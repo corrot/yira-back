@@ -6,6 +6,10 @@
   "authenticationRoute": "/auth",
   "authorizationRoute": "/protected",
   "registrationRoute": "/register",
+  "readTasksRoute": "/tasks",
+  "createTaskRoute": "/create-task",
+  "updateTaskRoute": "/update-task",
+  "deleteTaskRoute": "/delete-task",
   "roles": ["admin"],
   "routes": [
     {

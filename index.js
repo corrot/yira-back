@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const register = require('./register.js');
 const authenticate = require('./authenticate.js');
 const authorize = require('./middleware/authorize.js');
+const tasks = require('./tasks-crud.js');
 
 // Configure Express
 const app = express();
@@ -43,7 +44,7 @@ app.post(config.get('authenticationRoute'), function (req, res) {
     try {
       token = authenticate(req.body.identifier, req.body.password);
       req.log(`Authentication of user with ID '${req.body.identifier}' successful! Token: ${token}`);
-      res.json({ message: 'Login successful!', token: token });
+      res.json({ message: 'Login successful!', token: token, user: req.body.identifier });
     } catch (error) {
       req.log(`Authentication of user with ID '${req.body.identifier}' failed.`);
       res.status(401).end();
@@ -57,6 +58,49 @@ app.post(config.get('authenticationRoute'), function (req, res) {
 // Authorization route
 app.get(config.get('authorizationRoute'), authorize, function (req, res) {
   res.json({ message: 'Successfully authorized!' });
+});
+
+// tasks
+app.get(config.get('readTasksRoute'), function (req, res) {
+  try {
+    result = tasks.getTasks();
+    res.json(result);
+  } catch (error) {
+    req.log(`failed to get tasks`);
+    res.status(500).end();
+  }
+});
+app.post(config.get('createTaskRoute'), function (req, res) {
+  if(!req.body.title) throw new Error ('No title')
+  try {
+    tasks.createTask(req.body, res);
+    res.json({message: 'Successfully created', data: req.body});
+  } catch (error) {
+    req.log(`failed to create new task`);
+    res.status(500).end();
+  }
+});
+app.post(config.get('updateTaskRoute'), function (req, res) {
+  console.log(req.body);
+  if(!req.body.title) throw new Error ('No title')
+  try {
+    tasks.updateTask(req.body, res);
+    res.json({message: 'Successfully updated', data: req.body});
+  } catch (error) {
+    req.log(`failed to update task`);
+    res.status(500).end();
+  }
+});
+app.post(config.get('deleteTaskRoute'), function (req, res) {
+  console.log(req.body);
+  if(!req.body.title) throw new Error ('No title')
+  try {
+    tasks.deleteTask(req.body, res);
+    res.json({message: 'Successfully deleted', data: req.body});
+  } catch (error) {
+    req.log(`failed to delete task`);
+    res.status(500).end();
+  }
 });
 
 // Role-specific authorization routes
